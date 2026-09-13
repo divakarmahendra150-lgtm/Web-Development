@@ -17,10 +17,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================================================
 
 SECRET_KEY = config(
-    
+    "SECRET_KEY",
+    default="django-insecure-local-development-key"
 )
 
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = config(
+    "DEBUG",
+    default=False,
+    cast=bool
+)
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -66,7 +71,7 @@ MIDDLEWARE = [
 
     "django.middleware.security.SecurityMiddleware",
 
-    # WhiteNoise for production static files
+    # WhiteNoise
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -112,7 +117,8 @@ TEMPLATES = [
 # DATABASE
 # =========================================================
 
-DATABASE_URL = config("DATABASE_URL", default="")
+# Render PostgreSQL / production
+DATABASE_URL = config("DATABASE_URL", default="").strip()
 
 if DATABASE_URL:
     DATABASES = {
@@ -123,16 +129,32 @@ if DATABASE_URL:
             ssl_require=True,
         )
     }
+
 else:
-    # Local development fallback
+    # Local PostgreSQL development fallback
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": config("DB_NAME", default="liferpg"),
-            "USER": config("DB_USER", default="postgres"),
-            "PASSWORD": config("DB_PASSWORD", default=""),
-            "HOST": config("DB_HOST", default="127.0.0.1"),
-            "PORT": config("DB_PORT", default="5432"),
+            "NAME": config(
+                "DB_NAME",
+                default="liferpg"
+            ),
+            "USER": config(
+                "DB_USER",
+                default="postgres"
+            ),
+            "PASSWORD": config(
+                "DB_PASSWORD",
+                default=""
+            ),
+            "HOST": config(
+                "DB_HOST",
+                default="127.0.0.1"
+            ),
+            "PORT": config(
+                "DB_PORT",
+                default="5432"
+            ),
         }
     }
 
@@ -147,19 +169,19 @@ AUTH_USER_MODEL = "accounts.User"
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME":
-        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
         "NAME":
-        "django.contrib.auth.password_validation.MinimumLengthValidator"
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
         "NAME":
-        "django.contrib.auth.password_validation.CommonPasswordValidator"
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
         "NAME":
-        "django.contrib.auth.password_validation.NumericPasswordValidator"
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -190,7 +212,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-# WhiteNoise compressed static files
+# WhiteNoise
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
@@ -254,7 +276,6 @@ CORS_ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
-
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -287,8 +308,6 @@ if not DEBUG:
 
     CSRF_COOKIE_SECURE = True
 
-    SECURE_BROWSER_XSS_FILTER = True
-
     SECURE_CONTENT_TYPE_NOSNIFF = True
 
     X_FRAME_OPTIONS = "DENY"
@@ -308,14 +327,15 @@ if not DEBUG:
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
         },
     },
+
     "root": {
         "handlers": ["console"],
         "level": "INFO",
     },
 }
-
