@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+backend/venv/
+venv/
+.npm-cache/
+
+# Environment and Secrets
+.env
+.env.local
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+staticfiles/
+media/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Logs and Caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+.eslintcache
+.stylelintcache
+.cache/
+.oxlintcache
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives
+*.zip
+*.tar.gz

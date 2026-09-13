@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /register
+
+# Protected app routes
+Disallow: /dashboard
+Disallow: /quests
+Disallow: /character
+Disallow: /rewards
+Disallow: /inventory
+Disallow: /history
+Disallow: /profile
+
+Sitemap: https://liferpg.app/sitemap.xml
