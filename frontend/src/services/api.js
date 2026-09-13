@@ -3,7 +3,7 @@
  * All API communication MUST use native fetch().
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://web-development-25k4.onrender.com/';
 
 export async function request(endpoint, options = {}) {
   const url = `${BASE_URL}${endpoint}`;
